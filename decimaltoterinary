@@ -1,0 +1,15 @@
+#include<stdio.h>
+int recur(int num)
+{
+    if(num==0)
+    return 0;
+    else return((num%3)+10*recur(num/3));
+}
+int main()
+{
+    int num;
+    printf("enter decimal number");
+    scanf("%d",&num);
+    printf("ternary value is :%d",recur(num));
+    return 0;
+}
