@@ -1,0 +1,150 @@
+#include<stdio.h>
+#include<stdlib.h>
+void create();
+void view();
+void insert_beg();
+void insert_end();
+void insert_mid();
+void delete();
+struct node   
+{  
+    int data;  
+    struct node *next;   
+};
+struct node*head=NULL,*tail=NULL;
+int main()
+{
+	int ch;
+	while(1)
+	{
+		printf("\n chose your option:");
+		printf("\n 1: for  create \n 2: for view \n 3 :for inserting at the beginning \n 4: for inserting at the end \n 5: for inserting at any position \n 6: for deleting a node \n");
+		scanf("%i",&ch);
+		switch(ch)
+		{
+			case 1:create();
+			break;
+			case 2:view();
+			break;
+			case 3:insert_beg();
+			break;
+			case 4:insert_end();
+			break;
+			case 5:insert_mid();
+			break;
+			case 6:delete();
+			break;
+			default :printf("\n you know your mistake...try again!");
+			return 0;
+		}
+	}
+}
+//create
+void create()
+{
+	int n,i;
+	printf("please enter the number of nodes to create");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		struct node* temp=(struct node *)malloc(sizeof(struct node));
+		printf("enter data\n ");
+		scanf("%d",&temp->data);
+		temp->next=NULL;
+		if(i==0)
+		{
+			head=temp;
+			tail=temp;
+		}
+		else 
+		{
+			tail->next=temp;
+			temp->next=head;
+			tail=temp;
+		}
+	}
+ } 
+ //view or traverse
+ void view()
+ {
+ 	struct node*ptr;
+ 	ptr=head;
+ 	while(ptr->next!=head)
+ 	{
+ 		printf("%d \t",ptr->data);
+ 		ptr=ptr->next;
+	}
+	printf("%d\n\n",ptr->data);
+ }
+ //inserting at the beginning
+  void insert_beg()
+ {
+ 	struct node *ptr;
+	ptr=(struct node *)malloc(sizeof(struct node));
+	printf("\n enter node info");
+	scanf("%d",&ptr->data);
+	ptr->next=head;
+	head=ptr;
+	tail->next=head;
+ }
+  //inserting node at the end
+ void insert_end()
+ {
+ 	struct node *ptr,*cpt;
+	ptr=(struct node *)malloc(sizeof(struct node));
+	printf("\n enter node info");
+	scanf("%d",&ptr->data);
+	tail->next=ptr;
+ ptr->next=head;
+ tail=ptr;
+ } 
+  //inserting node at any position
+ void insert_mid()
+ {
+
+ 	int target;
+ 	struct node *ptr,*cpt;
+ 	ptr=(struct node *)malloc(sizeof(struct node));
+ 	printf("element to be inserted are:\n");
+	scanf("%d",&ptr->data);
+	printf("enter the node after which we have to insert the data:\n");
+	scanf("%d",&target);
+	cpt=head;
+	while(cpt->data!=target)
+	{
+		cpt=cpt->next;
+	}
+	ptr->next=cpt->next;
+	cpt->next=ptr;
+ }
+ //deleting a node
+ void delete()
+  {
+  	struct node *ptr,*cpt;
+  	int item;
+  	printf("node to be deleted is:\n");
+  	scanf("%d",&item);
+  	if(head->data==item)                      
+  	{
+  		ptr=head;
+  		head=head->next;
+  		tail->next=head;
+  		free(ptr);
+    }
+    	 else 
+	  {
+	  	ptr=head;                          
+	  	while(ptr->data!= item)
+		  {
+		  	cpt=ptr;
+		  	ptr=ptr->next;
+		  }
+		  cpt->next=ptr->next;
+		  if(ptr==tail)        
+		  {
+		  	tail=cpt;
+	        tail->next=head;
+		  }
+		  free(ptr);
+	  }
+	}
